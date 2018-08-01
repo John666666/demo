@@ -9,8 +9,15 @@ import java.io.InputStream;
 
 public class FileSystemClassLoader extends ClassLoader {
 
-	public final static String CLASSPATH = "d:/temp/lib";
+	private String classPath = "d:/temp/lib";
 
+	public FileSystemClassLoader() {
+	}
+	
+	public FileSystemClassLoader(String rootPath) {
+		this.classPath = rootPath;
+	}
+	
 	@Override
 	protected Class<?> findClass(String name) throws ClassNotFoundException {
 		byte[] classData = readClass(name);
@@ -58,7 +65,7 @@ public class FileSystemClassLoader extends ClassLoader {
 	}
 
 	private String classNameToPath(String className) {
-		return CLASSPATH + File.separatorChar + className.replace('.', File.separatorChar) + ".class";
+		return classPath + File.separatorChar + className.replace('.', File.separatorChar) + ".class";
 	}
 
 }
