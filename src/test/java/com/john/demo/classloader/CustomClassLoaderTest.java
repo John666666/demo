@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import org.junit.Test;
 
 import com.john.demo.App;
+import com.john.demo.bean.IJohnTest;
 
 public class CustomClassLoaderTest {
 
@@ -14,16 +15,17 @@ public class CustomClassLoaderTest {
 
 			ClassLoader cl = App.class.getClassLoader();
 			while (cl != null) {
-				System.out.println(cl);
+//				System.out.println(cl);
 				cl = cl.getParent();
 			}
 			FileSystemClassLoader fccl = new FileSystemClassLoader();
-			Class<?> johnTest = fccl.loadClass("JohnTest");
+			Class<?> johnTest = fccl.loadClass("com.john.demo.bean.JohnTest");
 			Object jt1 = johnTest.newInstance();
 
 			FileSystemClassLoader fccl2 = new FileSystemClassLoader();
-			Class<?> johnTest2 = fccl.loadClass("JohnTest"); // 只有用同一个ClassLoader defineClass的才被JVM认为是同一个类
-			// Class<?> johnTest2 = fccl2.loadClass("JohnTest");
+//			Class<?> johnTest2 = fccl.loadClass("com.john.demo.bean.JohnTest"); // 只有用同一个ClassLoader defineClass的才被JVM认为是同一个类
+//			 Class<?> johnTest2 = fccl2.loadClass("com.john.demo.bean.JohnTest");
+			 Class<?> johnTest2 = fccl2.loadClass("hehe.jar!com.john.demo.bean.JohnTest");
 			Object jt2 = johnTest2.newInstance();
 
 			Method setInstance = johnTest.getMethod("setInstance", johnTest);

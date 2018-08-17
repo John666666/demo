@@ -1,4 +1,4 @@
-package com.john.demo.classloader;
+package com.john.demo.bean;
 
 public interface IJohnTest {
 	

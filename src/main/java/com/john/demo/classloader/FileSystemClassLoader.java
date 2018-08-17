@@ -13,11 +13,11 @@ public class FileSystemClassLoader extends ClassLoader {
 
 	public FileSystemClassLoader() {
 	}
-	
+
 	public FileSystemClassLoader(String rootPath) {
 		this.classPath = rootPath;
 	}
-	
+
 	@Override
 	protected Class<?> findClass(String name) throws ClassNotFoundException {
 		byte[] classData = readClass(name);
@@ -26,12 +26,17 @@ public class FileSystemClassLoader extends ClassLoader {
 		}
 		throw new ClassNotFoundException();
 	}
-
+	
 	private byte[] readClass(String name) throws ClassNotFoundException {
 		if (name == null || name.trim().length() < 1) {
 			throw new RuntimeException("必须指定要加载的类名");
 		}
-		String path = classNameToPath(name);
+		String path = null;
+		if (name.contains("jar!")) {
+			path = jarNameToPath(name);
+		} else {
+			path = classNameToPath(name);
+		}
 		byte[] buffer = new byte[2048];
 		InputStream in = null;
 		ByteArrayOutputStream out = null;
@@ -62,6 +67,15 @@ public class FileSystemClassLoader extends ClassLoader {
 				}
 			}
 		}
+	}
+
+	private String jarNameToPath(String name) {
+		
+		String jarPath = name.substring(0, name.indexOf(".jar!") + ".jar".length() + 1);
+		
+		String className = name.substring(name.indexOf(".jar!") + ".jar!".length());
+		
+		return "file://" + classPath + jarPath + "/" + className.replace('.', '/') + ".class";
 	}
 
 	private String classNameToPath(String className) {
