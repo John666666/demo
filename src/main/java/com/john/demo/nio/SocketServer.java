@@ -85,12 +85,12 @@ public class SocketServer {
 				buffer.flip();
 				int len = socket.read(buffer);
 				
-				out = socket.getOutputStream();
-				if (this.message == null) {
-					this.message = "欢迎进入聊天室.";
-				}
-				out.write(this.message.getBytes());
-				out.flush();
+//				out = socket.getOutputStream();
+//				if (this.message == null) {
+//					this.message = "欢迎进入聊天室.";
+//				}
+//				out.write(this.message.getBytes());
+//				out.flush();
 			} catch (IOException e) {
 				System.out.println("连接已断开");
 			}
@@ -108,7 +108,7 @@ public class SocketServer {
 		public void run() {
 			BufferedReader in = null;
 			try {
-				in = new BufferedReader(new InputStreamReader(socket.getInputStream(), "utf-8"));
+//				in = new BufferedReader(new InputStreamReader(socket.getInputStream(), "utf-8"));
 				String line = null;
 				while ((line = in.readLine()) != null) {
 					if ("q".equals(line.trim())) {
