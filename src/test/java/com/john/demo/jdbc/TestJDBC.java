@@ -4,13 +4,28 @@ import com.john.demo.utils.DBUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.junit.Test;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.util.Date;
 
 public class TestJDBC {
+
+    @Test
+    public void testOracleDriver() {
+
+        String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+//        String url = "jdbc:oracle:thin:@//localhost:1521/orcl";
+        String user = "scott";
+        String pwd = "scott";
+
+        try {
+            Connection connection = DriverManager.getConnection(url, user, pwd);
+            System.out.println(connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     @Test
     public void testJdbcDateType() {
